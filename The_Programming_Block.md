@@ -78,7 +78,7 @@
     - string ops
     - random
     - map
-- @todo(assignments are NOT so cool;))
+
 - ASSIGNMENT: use `random()` to create a sketch where shapes appear in random locations every frame.
 - ASSIGNMENT: create a sketch where a rectangle follows the mouse, but its speed is scaled using `map()`.
 - TOPIC: commenting + debugging: how to deal with errors 
@@ -168,9 +168,6 @@ note: demo touch screen with drawing programs
 
 ## BLOCK 04 "Libraries+Drawing"
 
-- dpp: write one sketch with VS Code
-- dpp: use LLM once for debugging
-
 - TOPIC: ( built-in ) libraries e.g
     - PDF Export
     - Serial
@@ -212,6 +209,7 @@ note: demo touch screen with drawing programs
 - processing in C++/Python/JavaScript ( i.e Umgebung )
 - processing as an idea
 - other programming concepts/languages e.g shaders (GLSL)
+- write a sketch with VS Code
 
 ---
 
