@@ -11,7 +11,19 @@ void setup() {
 
 void draw() {
     background(255);
+    noStroke();
+    fill(0);
+    if (EM_PORT_5){
+        circle(100, 100, 100);
+    }
+    if (EM_PORT_4){
+        circle(100, 200, 100);
+    }
+    
 }
+
+boolean EM_PORT_5 = false;
+boolean EM_PORT_4 = false;
 
 void keyPressed() {
     if (key == '1') {
@@ -33,11 +45,24 @@ void em_note_on(int pitch, int velocity) {
     if (pitch == EurorackMIDI.EM_PORT_1) {
         println("received from port 1: on");
     }
+    
+    if (pitch == EurorackMIDI.EM_PORT_4) {
+        EM_PORT_4 = true;
+    }
+    if (pitch == EurorackMIDI.EM_PORT_5) {
+        EM_PORT_5 = true;
+    }
 }
-
+q
 void em_note_off(int pitch, int velocity) {
     println("off: " + pitch + ", " + velocity);
     if (pitch == EurorackMIDI.EM_PORT_1) {
         println("received from port 1: off");
+    }
+    if (pitch == EurorackMIDI.EM_PORT_4) {
+        EM_PORT_4 = false;
+    }
+    if (pitch == EurorackMIDI.EM_PORT_5) {
+        EM_PORT_5 = false;
     }
 }
