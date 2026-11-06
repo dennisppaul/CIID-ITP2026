@@ -1,0 +1,42 @@
+VJ JOURNEY — LIVE MIDI
+
+1. Open VJJourneyMIDILive.pde in Processing (Java mode).
+2. Install Wellen through Sketch > Import Library > Manage Libraries.
+3. Connect the MIDI controller or sequencer and press Run.
+
+Keep both PDE files and the complete data folder together when sharing.
+
+MIDI INPUT
+Akai LPD8 and MIDImix inputs are recognised by name and opened together.
+One ordinary sequencer input is also selected; a port named Euro is preferred.
+I reconnects controllers and cycles the sequencer input. A shows incoming messages.
+Use LPD8 PAD/note mode. Pads and CC controls learn visual lanes on first use.
+For sequencer-driven layers, send separate parts on separate MIDI channels.
+Channels 1/4/7/... drive bass shapes, 2/5/8/... mids, and 3/6/9/... highs.
+Note velocity, held notes, CC1, sustain and MIDI clock/transport are supported.
+A controller gesture controls the picture; receiving a song's continuing parts
+requires the music app to send its playing notes and clock.
+
+CONTROLS
+I       Reconnect/select MIDI input
+A       MIDI monitor
+H       Show/hide controls
+N       Next visual section or return from rings
+1–4     Preview dot / line / rotating circles / blobs
+T       Cue rings from blobs
+Space   Manual hit; mouse click also works
+C       Next original palette
+F       Fold/enlarge the field
+G       Grain on/off
+L       Light flare on/off
+B       Blackout
+R       Restart the visual journey
+
+The picture renders at 1920x1080 and fits the fullscreen display.
+For a practice window, replace fullScreen(P2D) with size(960,540,P2D).
+
+CONTENTS
+VJJourneyMIDILive.pde — shapes, visual transitions and rendering
+MIDI.pde — live input, controller mapping and connection cleanup
+data/journey_blobs.glsl — kaleidoscope shader
+data/light_flare.glsl — coloured light-flare shader

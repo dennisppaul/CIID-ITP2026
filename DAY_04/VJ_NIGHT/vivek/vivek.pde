@@ -42,7 +42,7 @@ void setup() {
   fft = new FFT(this, BANDS);
   spectrum = new float[BANDS];
 
-  song = new SoundFile(this, "assets/rainbow.mp3");
+  song = new SoundFile(this, "rainbow.mp3");
 
   fft.input(song);   // required in Processing: tells the FFT what to analyse
 }
