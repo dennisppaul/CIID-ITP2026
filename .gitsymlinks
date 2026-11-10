@@ -1,0 +1,2 @@
+# symlinks whose target content gets committed (see .githooks/pre-commit)
+MICROEXCURSIONS/microexcursion--The_Way_of_the_Comannd_Line_Interface.md

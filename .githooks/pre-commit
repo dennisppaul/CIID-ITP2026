@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# Materialize symlinked directories/files listed in .gitsymlinks:
+# the symlink stays in the working tree, but commits contain the real content.
+set -euo pipefail
+
+ROOT=$(git rev-parse --show-toplevel)
+LIST="$ROOT/.gitsymlinks"
+[ -f "$LIST" ] || exit 0
+cd "$ROOT"
+
+ZERO=0000000000000000000000000000000000000000
+
+while IFS= read -r P || [ -n "$P" ]; do
+  P="${P%/}"
+  case "$P" in ''|\#*) continue ;; esac
+  [ -L "$P" ] || { echo "gitsymlinks: '$P' is not a symlink, skipping" >&2; continue; }
+  L=$(readlink "$P")
+  T=$(cd "$(dirname "$P")" && cd "$(dirname "$L")" 2>/dev/null && pwd)/$(basename "$L") || T=""
+  [ -n "$T" ] && [ -e "$T" ] || { echo "gitsymlinks: target of '$P' missing: $T" >&2; exit 1; }
+
+  # 1. drop old entries (the symlink itself and anything below it)
+  { git ls-files -z -- "$P" ; } | while IFS= read -r -d '' f; do
+    printf '0 %s\t%s\0' "$ZERO" "$f"
+  done | git update-index -z --index-info
+
+  # 2. add current content of target
+  add_file() { # $1 = source file, $2 = path in repo
+    if [ -L "$1" ]; then
+      mode=120000; sha=$(printf '%s' "$(readlink "$1")" | git hash-object -w --stdin)
+    else
+      [ -x "$1" ] && mode=100755 || mode=100644
+      sha=$(git hash-object -w -- "$1")
+    fi
+    printf '%s %s\t%s\0' "$mode" "$sha" "$2"
+  }
+  {
+    if [ -d "$T" ]; then
+      if git -C "$T" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        git -C "$T" ls-files -z -co --exclude-standard .
+      else
+        (cd "$T" && find . \( -type f -o -type l \) ! -name .DS_Store -print0) | while IFS= read -r -d "" f; do printf "%s\0" "${f#./}"; done
+      fi | while IFS= read -r -d '' f; do
+        [ -e "$T/$f" ] || [ -L "$T/$f" ] || continue   # deleted but not yet committed upstream
+        add_file "$T/$f" "$P/$f"
+      done
+    else
+      add_file "$T" "$P"
+    fi
+  } | git update-index -z --index-info
+done < "$LIST"
