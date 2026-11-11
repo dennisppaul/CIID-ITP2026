@@ -1,12 +1,13 @@
 ---
 marp: true
-size: half
+size: half_16:9
 style: |
   section {
     --page-padding-chars: 4;
     --code-white-space: pre-wrap;
     --code-max-width: 100cqw;
     --code-max-lines: 25;
+    --font-size: 16px;
   }
 ---
 
@@ -16,11 +17,23 @@ style: |
 
 prelude -> [https://hackertyper.com](https://hackertyper.com)
 
-> prelude -> [https://hackertyper.com](https://hackertyper.com)
-
 ---
 
 prelude -> `figlet -f slant "WEHEARTCLI" | lolcat`
+
+---
+
+computer A:
+```
+nc -l -p 12345
+```
+
+computer B:
+```
+nc $(ipconfig getifaddr en0) 12345
+```
+
+PS might need to install netcat first e.g with `brew install netcat`
 
 ---
 
@@ -389,3 +402,12 @@ there are also a lot of *Text-based User Interface* (TUI) applications …
 - https://terminaltrove.com
 - https://www.climagic.org
 - https://hackertyper.com
+
+## Where to NOT Go From Here Under Any Circumstances
+
+```
+aafire
+cbonsai
+asciiquarium
+nyancat
+```
